@@ -1,0 +1,149 @@
+Starting our ecommerse project 
+
+=>pip install virtualenv
+=>virtualenv env
+=>env\scripts\activate
+=>pip install django
+=>django-admin startproject estore
+=>cd estore
+=>python manage.py startapp estoreapp
+=>python manage.py runserver
+
+To avoid repeatation of header and footer section in all files, we can use DTL template inheritance feature.
+
+header.html
+base.html    =>customise based on content of page
+footer.html
+
+Register.html page
+
+Database settings:
+create database estore9_11;
+use estore9_11;
+
+DATABASES = {
+    "default": {
+        'ENGINE':'django.db.backends.mysql',
+        'NAME':'estore9_11',
+        'HOST':'localhost',
+        'USER':'root',
+        'PASSWORD':'root',
+        'PORT':'3306',
+    }
+}
+
+=>pip install mysqlclient
+=>python manage.py makemigrations
+=>python manage.py migrate 
+
+Django supports by itself all user authentication functionalities.
+
+For encryption:
+set_password(password)
+
+Authentication for login:
+aunthenticate()- this func is in auth module.
+This func returns Object/row if uname and pass match in db.
+
+u2@gmail.com  =>row
+u.username
+u.password
+
+Sessions:
+login(request,u)   ==>starts a session
+Its data is stored under django_session table.
+
+Menu-Switching:
+
+This can be done by using, 
+request.user.is_authenticated.
+It returns a boolean value, if user logged in True else false
+
+Admin Role:
+
+Admin in django is reffered as a Superuser
+Create a superuser:
+python manage.py createsuperuser
+username:u5
+password:..
+confirm pass:..
+
+Create Product Model:
+id,name,price,cat,pdetails,is_active
+
+Register product model on admin panel
+
+Customisation on admin panel
+1.show all columns in admin panel
+2.show filter for categorical data columns
+
+Home Page:
+Fetch all products from product table.
+
+sql query-select * from ecstoreapp_product;
+ORM Query - product.objects.filter(is_active=True)
+
+Filter Query:
+Sql- select * from product where cat=3 and id=3;
+
+When we have to deal with multiple conditions we use lookups and logical operators.
+
+lookups are objects of Q class in django.db.models.
+
+Order By Clause:
+In SQL:
+select * from product where condition order by colname desc;
+
+Sorting using ORM:
+modelname.objects.order_by('colname')  ==>ascending 
+modelname.objects.order_by('-colname')  ==>descending
+
+Filter by range:
+In SQL:
+select * from product where price>=1000 and price<=20000 and is_active=1;
+select * from product where (price between 1000 and 20000) and is_active=1;
+
+ORM Comparion operators:
+                             SQL              ORM
+less than 5000            price<5000         price__lt=5000
+less than eq to 5000      price<=5000        price__lte=5000
+gret than 5000            price>5000         price__gt=5000
+gret than eq to 5000      price>=5000        price__gte=5000
+
+Add to cart button:
+
+auth_user                    product 
+id uname pass ...         id  name price ...
+
+model:cart
+id  uid(userid)  pid(prodid)
+1    1           2
+2    1           3
+
+CASCADE- any changes done to parent table will automatically reflect to its child table.
+
+Razorpay integration
+=>pip install Razorpay
+
+Gmail integration 
+
+App password - lgkt zvam ijer rvur
+
+from django.core.mail import send_mail
+
+send_mail(
+    "Subject here",
+    "Here is the message.",
+    "from@example.com",
+    ["to@example.com"],
+    fail_silently=False,
+)
+
+Email setting in settings.py:
+
+EMAIL_HOST='smtp.gmail.com' #simple mail transfer protocol
+EMAIL_HOST_USER='wasiyakiranr@gmail.com'
+EMAIL_HOST_PASSWORD='lgktzvamijerrvur'
+EMAIL_PORT=587
+EMAIL_USER_TLS=True
+EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'

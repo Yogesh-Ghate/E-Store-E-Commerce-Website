@@ -1,0 +1,60 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="row mt-5">
+            <div class="col-12">
+                <a href="/index">Home</a>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-md-4 shadow mt-5 p-4 mx-auto">
+                <h2 class="text-center">Register</h2>
+                {% if errmsg %}
+                <div class="alert alert-danger mt-5">
+                    {{errmsg}}
+                </div>
+                {% endif %}
+
+                {% if sucmsg %}
+                <div class="alert alert-success mt-5">
+                    {{sucmsg}}
+                </div>
+                {% endif %}
+
+                <form action="/register" method="POST">
+                    {% csrf_token %}
+                    <!--username-->
+                    <div class="mb-3">
+                        <label for="input1" class="form-label">Username:</label>
+                        <input type="email" class="form-control" id="input1" placeholder="Enter username" name="uname">
+                    </div>
+                    <!--password-->
+                    <div class="mb-3">
+                        <label for="input2" class="form-label">Password:</label>
+                        <input type="password" class="form-control" id="input2" placeholder="Enter password" name="upass">
+                    </div>
+                    <!--confirm password-->
+                    <div class="mb-3">
+                        <label for="input3" class="form-label">Confirm Password:</label>
+                        <input type="password" class="form-control" id="input3" placeholder="Enter password" name="ucpass">
+                    </div>
+                    <div class="mb-3">
+                        <input type="submit" class="btn btn-danger" value="Register">
+                        Already a User? <a href="/login">Login</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+</body>
+</html>
